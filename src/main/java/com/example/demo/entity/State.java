@@ -23,7 +23,7 @@ public class State {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
-    private Country country;
+     Country country;
     @CreationTimestamp
     @Column(name = "create_date",updatable = false )
     private Date createDate;

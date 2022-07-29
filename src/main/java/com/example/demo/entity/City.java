@@ -4,12 +4,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 
 @Entity
 @Table(name = "city")
-public class City {
+public class City{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "city_id", nullable = false)
@@ -19,9 +21,9 @@ public class City {
     @NotNull
     private int zipCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name ="state_id")
-    State state;
+    private State state;
 
     @CreationTimestamp
     @Column(name = "create_date", updatable = false)
@@ -30,16 +32,6 @@ public class City {
     @Column(name ="update_date",updatable = true)
     private Date updateDate;
 
-    public City(Long cityId, String cityName) {
-        this.cityId = cityId;
-        this.cityName = cityName;
-    }
-
-    public City(String cityName, int zipCode, State state) {
-        this.cityName = cityName;
-        this.zipCode = zipCode;
-        this.state = state;
-    }
 
     public City(Long cityId, String cityName, int zipCode, Date createDate, Date updateDate) {
         this.cityId = cityId;
@@ -49,32 +41,12 @@ public class City {
         this.updateDate = updateDate;
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "City{" +
-                "cityId=" + cityId +
-                ", cityName='" + cityName + '\'' +
-                ", zipCode=" + zipCode +
-                ", state=" + state +
-                ", createDate=" + createDate +
-                ", updateDate=" + updateDate +
-                '}';
-    }
 
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
 
     public int getZipCode() {
         return zipCode;
@@ -116,5 +88,22 @@ public class City {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cityId, cityName, zipCode, state, createDate, updateDate);
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "cityId=" + cityId +
+                ", cityName='" + cityName + '\'' +
+                ", zipCode=" + zipCode +
+                ", state=" + state +
+                ", createDate=" + createDate +
+                ", updateDate=" + updateDate +
+                '}';
     }
 }

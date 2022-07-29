@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.repository.countryRepository;
+import com.example.demo.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 public class CountryServiceImpl implements countryService{
 
 @Autowired
-    countryRepository countryRepository;
+CountryRepository countryRepository;
 
 }

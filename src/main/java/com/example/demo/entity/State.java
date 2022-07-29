@@ -1,16 +1,22 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "state")
-public class State {
+public class State  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "state_id", nullable = false)
@@ -21,9 +27,10 @@ public class State {
     @OneToMany(mappedBy = "state")
     private List<City> cities;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
-     Country country;
+    private Country country;
     @CreationTimestamp
     @Column(name = "create_date",updatable = false )
     private Date createDate;
@@ -32,6 +39,22 @@ public class State {
     private Date updateDate;
 
 
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
     public State() {
     }

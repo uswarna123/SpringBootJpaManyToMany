@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.repository.stateRepository;
+import com.example.demo.repository.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class StateServiceImpl implements stateService{
 
     @Autowired
-    stateRepository stateRepository;
+    StateRepository stateRepository;
 
 
 }

@@ -1,7 +1,7 @@
 package com.example.demo.data;
 
 import com.example.demo.entity.Country;
-import com.example.demo.repository.countryRepository;
+import com.example.demo.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class CountryDataTableLoader implements ApplicationRunner {
 
     @Autowired
-    countryRepository countryRepository;
+    CountryRepository countryRepository;
     @Override
     public void run(ApplicationArguments args) throws Exception {
     //  addDataToCountryTable();

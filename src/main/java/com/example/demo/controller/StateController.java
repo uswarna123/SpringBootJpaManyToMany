@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Country;
 import com.example.demo.entity.State;
 import com.example.demo.exception.BadRrequestException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.CountryRepository;
 import com.example.demo.repository.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,30 @@ public class StateController {
        return ResponseEntity.ok(stateRepository.save(state));
 
     }
-   @PostMapping("/addNewState")
-    public  ResponseEntity<State> addNewState(@RequestBody State state){
-
-
-       return null;
+   @PutMapping("/updateStateById/{Id}")
+      public  ResponseEntity<State> updateStateById(@Valid @RequestBody State state,@PathVariable Long Id) {
+       State state1 = stateRepository.findById(Id).orElseThrow(() -> new
+               ResourceNotFoundException("No State Found With this id:" + Id));
+               state1.setStateName(state.getStateName());
+       Optional<Country> countryOpt = countryRepository.findById(state.getCountry().getCountryId());
+      if(countryOpt.isEmpty()){
+          throw new ResourceNotFoundException("No Country found with this id please check dB");
+      }
+      state1.setCountry(countryRepository.findById(countryOpt.get().getCountryId()).get());
+       State updatedState = stateRepository.save(state1);
+       return ResponseEntity.ok(updatedState) ;
    }
+    @PatchMapping("/updateStateName/{Id}")
+        public  ResponseEntity<State> updateStateName(@Valid @RequestBody State state,@PathVariable Long Id) {
+        State state1 = stateRepository.findById(Id).orElseThrow(() -> new
+                ResourceNotFoundException("No State Found With this id:" + Id));
+        state1.setStateName(state.getStateName());
+        State updatedStateName = stateRepository.save(state1);
+        return ResponseEntity.ok(updatedStateName) ;
+    }
+    @DeleteMapping("/deleteAllStates")
+            public String deleteAllStates(){
+        stateRepository.deleteAll();
+        return "All Records in state Table deleted";
+    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CityRepository extends JpaRepository<City,Long> {
 
-    @Query("FROM a city WHERE city_name=?1")
-    List<City> finfByName(String cityname);
+   // @Query("FROM a city WHERE city_name=?1")
+//    List<City> finfByName(String cityname);
 
 }
